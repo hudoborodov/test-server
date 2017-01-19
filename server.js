@@ -26,12 +26,13 @@ function start() {
         'x-sent' : true
       }
     };
-    res.sendFile('C:\\project\\server\\FSDEPH.log', options, function (err) {
+	const fileName = __dirname + '\\server.log';
+    res.sendFile(fileName, options, function (err) {
       if (err) {
         logger.info(err);
         res.status(err.status).end();
       } else {
-        logger.info('Sent:', 'C:\\project\\server\\log.log');
+        logger.info('Sent:', fileName);
       }
     });
   });
