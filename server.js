@@ -26,7 +26,7 @@ function start() {
         'x-sent' : true
       }
     };
-	const fileName = __dirname + '\\server.log';
+    const fileName = __dirname + '\\server.log';
     res.sendFile(fileName, options, function (err) {
       if (err) {
         logger.info(err);
