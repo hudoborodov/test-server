@@ -5,15 +5,19 @@
 'use strict'
 
 const express = require('express');
+const docs = require("express-mongoose-docs");
 const bunyan = require('bunyan');
 const logger = bunyan.createLogger({
     name : "server"
   });
 const app = express();
+const methods = require('express/node_modules/methods');
 
 start();
 
 function start() {
+  testdocs('test');
+
   app.get('/', function (req, res) {
     res.send('Hello World!');
   });
@@ -37,7 +41,20 @@ function start() {
     });
   });
 
+  docs(app);
+
   app.listen(3000, function () {
     logger.info('Example app listening on port 3000!');
   });
+}
+
+function testdocs() {
+  methods.forEach(method => {
+      let orig = app[method];
+      app[method] = (path, handler) => {
+        logger.info("method:", method, "\npath:", path);
+        //generate docs here
+        //orig.apply(this, arguments);
+      }
+    });
 }
